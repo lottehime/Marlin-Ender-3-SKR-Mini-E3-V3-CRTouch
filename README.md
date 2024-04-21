@@ -1,3 +1,13 @@
+<h3 align="center">Marling 2.x Bugfix for Ender 3 with SKR Mini E3 V3 board and CRTouch probe.</h3>
+
+* Configuration setup
+* Built firmware.bin
+
+
+<strong><i>Original repo readme below:</i></strong>
+
+---
+
 <p align="center"><img src="buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" height="250" alt="MarlinFirmware's logo" /></p>
 
 <h1 align="center">Marlin 3D Printer Firmware</h1>
