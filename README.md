@@ -1,7 +1,7 @@
 <h3 align="center">Marlin 2.x Bugfix for Ender 3 with SKR Mini E3 V3 board and CRTouch probe.</h3>
 
-* Configuration setup
-* Built firmware.bin
+* [Configuration setup](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/Marlin)
+* [Built firmware.bin](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/_BUILT_FIRMWARE)
 
 
 <strong><i>Original repo readme below:</i></strong>
