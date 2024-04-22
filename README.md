@@ -3,7 +3,79 @@
 * [Configuration setup](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/Marlin)
 * [Built firmware.bin](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/_BUILT_FIRMWARE)
 
-Don't forget to re-tram, check your xyze-steps and produce new bed meshes etc.! 🤓
+_**Don't forget your new startup GCODE for your slicer.**_
+Most importantly, you need to preheat the bed, home, load the mesh and then adjust the tilt:
+```GCODE
+M190 S65 ; Preheat bed for abl
+G28 ; Home all axes
+G29 L0 ; Load UBL
+G29 J ; 3-point mesh tilt
+```
+
+**Example startup GCODE:**
+```GCODE
+; Ender 3 Custom Start G-code
+M190 S65 ; Preheat bed for abl
+G28 ; Home all axes
+G29 L0 ; Load UBL
+G29 J ; 3-point mesh tilt
+;*** Start Preheating ***
+M190 S{material_bed_temperature_layer_0} ; Heat to setting 
+M109 S{material_print_temperature_layer_0} ﻿T0 ; Heat to setting
+;*** End Preheating ***
+G92 E0 ; Reset Extruder
+G1 Z2.0 F3000 ; Move Z Axis up little to prevent scratching of Heat Bed
+G1 X0.1 Y20 Z0.3 F5000.0 ; Move to start position
+M300 S440 P200 ; Play chime 1
+M300 S660 P250 ; Play chime 2
+M300 S880 P300 ; Play chime 3
+G1 X0.1 Y200.0 Z0.3 F1500.0 E15 ; Draw the first line
+G1 X0.4 Y200.0 Z0.3 F5000.0 ; Move to side a little
+G1 X0.4 Y20 Z0.3 F1500.0 E30 ; Draw the second line
+G92 E0 ; Reset Extruder
+G1 Z2.0 F3000 ; Move Z Axis up little to prevent scratching of Heat Bed
+G1 X5 Y20 Z0.3 F5000.0 ; Move over to prevent blob squish
+```
+
+_**Also, don't forget to re-tram, check your xyze-steps and produce new bed meshes etc.! 🤓**_
+
+### Initial Mesh Setup Process:
+_**Setup and Initial Probing:**_
+```GCODE
+M190 S65        ; Set bed temp to 65C (S65) recommended for accuracy when using a heated bed
+M104 S210       ; Set nozzle temp to 210C (S210) recommended for accuracy when using nozzle to probe
+
+G28             ; Home XYZ.
+G29 P1          ; Do automated probing of the bed.
+G29 P2 B T      ; Manual probing of locations. (USUALLY NOT NEEDED!)
+G29 P3 T        ; Repeat until all mesh points are filled in.
+
+G29 T           ; View the Z compensation values.
+G29 S0          ; Save UBL mesh points to slot 0.
+G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
+G29 A           ; Activate the UBL System.
+M500            ; Save settings to EEPROM.
+                ; WARNING: Causes UBL to be active at power-up, before any G28.
+```
+_**Mesh Fine-Tuning:**_
+```GCODE
+G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26),
+                ; continue with closest point (C),
+                ; prime nozzle by extruding 5mm (P5.0),
+                ; and set filament diameter 3mm (F3.0)
+                ; PLA temperatures are assumed unless you specify, e.g., B105 H225 for ABS Plastic
+G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
+                ; Repeat G26 and 'G29 P4 T' commands as needed.
+
+G29 S0          ; Save UBL mesh values to slot 0.
+M500            ; Save settings to EEPROM.
+```
+_**Transform Mesh with 3-Point Probing:**_
+```GCODE
+G29 L0          ; Load UBL mesh values from slot 0.
+G29 J           ; Probe 3 points and tilt the mesh to the plane.
+                ; This can be useful in the starting G-code of your preferred slicer.
+```
 
 <br>
 <br>
