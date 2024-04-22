@@ -3,6 +3,8 @@
 * [Configuration setup](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/Marlin)
 * [Built firmware.bin](https://github.com/lottehime/Marlin-Ender-3-SKR-Mini-E3-V3-CRTouch/tree/bugfix-2.1.x/_BUILT_FIRMWARE)
 
+Don't forget to re-tram, check your xyze-steps and produce new bed meshes etc.! 🤓
+
 <br>
 <br>
 <br>
